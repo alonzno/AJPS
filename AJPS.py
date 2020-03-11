@@ -1,11 +1,19 @@
 import sys
-import re
-import os
-import json
-import time
-import urllib.request
+import job_info_extractor as jin
 
-from bs4 import BeautifulSoup
+def main():
+	
+	if len(sys.argv) < 2:
+		print("Provide the url.")
+		exit()
+
+	jin.get_record(sys.argv[1])
+
+
+if __name__ == '__main__':
+	main()
+
+
 
 '''
 Make row for sheet
