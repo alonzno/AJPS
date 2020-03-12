@@ -26,12 +26,12 @@ def get_parse_params(domain):
 
 	# Load with functors for parsing known websites 
 	sf = {}
-	sf['jobs.lever.co'] = 		 Soup_Functors(lambda x: x.find('h2').text, 
-											   lambda x: x.find('div', class_='main-footer-text page-centered').p.a.text.split('Home Page')[0])
-	sf['boards.greenhouse.io'] = Soup_Functors(lambda x: x.find('h1', class_='app-title').text,
-											   lambda x: x.find('span', class_='company-name').text.split('at ')[1])
-	sf['jobs.jobvite.com'] = 	 Soup_Functors(lambda x: x.find('h2', class_='jv-header').text,
-											   lambda x: x.find('title').text.split(' - ')[0])
+	sf['jobs.lever.co'] = 		 Soup_Functors(lambda x: x.find('h2').text.strip(), 
+											   lambda x: x.find('div', class_='main-footer-text page-centered').p.a.text.split('Home Page')[0].strip())
+	sf['boards.greenhouse.io'] = Soup_Functors(lambda x: x.find('h1', class_='app-title').text.strip(),
+											   lambda x: x.find('span', class_='company-name').text.split('at ')[1].strip())
+	sf['jobs.jobvite.com'] = 	 Soup_Functors(lambda x: x.find('h2', class_='jv-header').text.strip(),
+											   lambda x: x.find('title').text.split(' - ')[0].strip())
 
 	return sf.get(domain, None)
 
