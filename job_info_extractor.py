@@ -26,7 +26,10 @@ def get_parse_params(domain):
 
 	# Load with functors for parsing known websites 
 	sf = {}
-	sf['jobs.lever.co'] = Soup_Functors(lambda x: x.find('h2').text, lambda x: x.find('div', class_='main-footer-text page-centered').p.a.text.split('Home Page')[0])
+	sf['jobs.lever.co'] = Soup_Functors(lambda x: x.find('h2').text, 
+										lambda x: x.find('div', class_='main-footer-text page-centered').p.a.text.split('Home Page')[0])
+	sf['boards.greenhouse.io'] = Soup_Functors(lambda x: x.find('h1', class_='app-title').text,
+											   lambda x: x.find('span', class_='company-name').text.split('at ')[1])
 
 	return sf.get(domain, None)
 
