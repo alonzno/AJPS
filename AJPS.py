@@ -1,5 +1,10 @@
 import sys
 import job_info_extractor as jin
+import google_sheets_writer as gsw
+
+# The ID and range of a sample spreadsheet.
+SAMPLE_SPREADSHEET_ID = '1IP9n56iRPb5QprBr7CKYtplKMI-0wX4otLLyDLRoiNc' # ToDo Probably not a good way to define this
+SAMPLE_RANGE_NAME = "'Sheet1'"
 
 def main():
 
@@ -7,7 +12,9 @@ def main():
 		print("Provide the url.")
 		exit()
 
-	print(jin.get_record(sys.argv[1]))
+	row = jin.get_record(sys.argv[1])
+	gsw.write_row_to_spreadsheet(SAMPLE_SPREADSHEET_ID, SAMPLE_RANGE_NAME, row)
+
 
 
 if __name__ == '__main__':
@@ -15,6 +22,8 @@ if __name__ == '__main__':
 
 
 '''
+Instructions for myself from myself
+
 Make row for sheet
 	Find which website -Regex?
 		Handle different websites independently?
