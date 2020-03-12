@@ -2,7 +2,7 @@ import sys
 import job_info_extractor as jin
 
 def main():
-	
+
 	if len(sys.argv) < 2:
 		print("Provide the url.")
 		exit()
@@ -12,7 +12,6 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
 
 
 '''
