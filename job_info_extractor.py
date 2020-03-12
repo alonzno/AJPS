@@ -1,11 +1,15 @@
 import json
-import time
+from datetime import datetime, date
 import re
 import urllib.request
 from urllib.parse import urlparse
 from collections import namedtuple
 
 from bs4 import BeautifulSoup
+
+class SiteNotSupportedException(Exception):
+	''' Use this for domains that you have not already written parsing rules for'''
+	pass
 
 
 '''
@@ -26,21 +30,47 @@ def get_parse_params(domain):
 
 	return sf.get(domain, None)
 
+'''
+	get_record
+	in: url -> String
+	out: Str
 
+	This function takes the url for a job posting and returns the JSON encoding that might
+	be used for adding to a spreadsheet.
+'''
 def get_record(url):
+
+	domain = urlparse(url).netloc
+
 	try:
 		Soup_Functors = namedtuple('Soup_Functors', ['title', 'company'])
-
-		domain = urlparse(url).netloc
-
-		print(domain)
 
 		content = urllib.request.urlopen(url).read()
 		soup = BeautifulSoup(content, 'html.parser')
 
 		sf = get_parse_params(domain)
 
-		print(sf.title(soup) + '@' + sf.company(soup))
+		if not sf:
+			raise SiteNotSupportedException
 
+		#ToDo Maybe add different date options
+		dt = datetime.now().date()
+		date = str(dt.month) + '/' + str(dt.day) + '/' + str(dt.year)
+
+		job_title = sf.title(soup)
+		company = sf.company(soup)
+
+		ret_json = json.dumps({'title': job_title,
+							  'company': company,
+							  'date': date,
+							  'url':url})
+		return ret_json
+
+		
+	except SiteNotSupportedException as e:
+		print('Parsing rules have not been written for the domain: ' + domain)
+		print('Please take a moment to write the rules and then try again')
+		exit(3)
 	except Exception as e:
+		print(e)
 		return "Woops, can't find that one.\n" +str(e)

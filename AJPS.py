@@ -7,7 +7,7 @@ def main():
 		print("Provide the url.")
 		exit()
 
-	jin.get_record(sys.argv[1])
+	print(jin.get_record(sys.argv[1]))
 
 
 if __name__ == '__main__':
