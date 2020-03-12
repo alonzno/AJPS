@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, date
 import re
-import urllib.request
+from urllib.request import urlopen, Request
 from urllib.parse import urlparse
 from collections import namedtuple
 
@@ -50,7 +50,10 @@ def get_record(url):
 	try:
 		Soup_Functors = namedtuple('Soup_Functors', ['title', 'company'])
 
-		content = urllib.request.urlopen(url).read()
+		headers = {'User-Agent': 'Safari/537.3'}
+		req = Request(url=url, headers=headers) 
+
+		content = urlopen(req).read()
 		soup = BeautifulSoup(content, 'html.parser')
 
 		sf = get_parse_params(domain)
