@@ -32,6 +32,8 @@ def get_parse_params(domain):
 											   lambda x: x.find('span', class_='company-name').text.split('at ')[1].strip())
 	sf['jobs.jobvite.com'] = 	 Soup_Functors(lambda x: x.find('h2', class_='jv-header').text.strip(),
 											   lambda x: x.find('title').text.split(' - ')[0].strip())
+	sf['www.glassdoor.com'] = 	 Soup_Functors(lambda x: x.find('h2', class_='mt-0 margBotXs strong').text.strip(),
+											   lambda x: x.find('span', class_='strong ib').text.strip())
 
 	return sf.get(domain, None)
 
