@@ -34,7 +34,8 @@ def get_parse_params(domain):
 											   lambda x: x.find('title').text.split(' - ')[0].strip())
 	sf['www.glassdoor.com'] = 	 Soup_Functors(lambda x: x.find('h2', class_='mt-0 margBotXs strong').text.strip(),
 											   lambda x: x.find('span', class_='strong ib').text.strip())
-
+	sf['triplebyte.com'] = 	     Soup_Functors(lambda x: x.find('h1', class_='font-light text-2xl mobile:text-xl m-1 mt-3').text.strip(),
+											   lambda x: x.find('h2', class_='font-bold text-lg mobile:text-base m-2').a.text.strip())
 	return sf.get(domain, None)
 
 '''
